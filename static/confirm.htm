@@ -1,0 +1,40 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script>
+	function getParam(name) {
+		  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+	}	
+	function getTracCookie() {
+		var folcoo = {}
+		var ca = document.cookie.split(';');
+		for ( var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ')
+				c = c.substring(1, c.length);
+			var kv = c.split('=');
+			if (kv[0].indexOf("fof_") == 0) {
+				folcoo[kv[1]] = kv[0].substring(4, kv[0].length);
+			}
+		}
+		return folcoo;
+	}
+    function beacon(code,domain) {
+      	var url = "http://followersfactory.com/track/confirm?code=" + code + "&domain=" + domain;
+        window.TrackBek = new Image();
+        window.TrackBek.src = url + '&t=' + Math.random();
+        return true;
+    }	
+
+	var cook = getTracCookie();
+	var domain = getParam('domain');
+	if(domain){
+		if(cook[domain]){
+			beacon(cook[domain],domain);
+		}
+	}
+</script>
+</body>
+</html>
